@@ -51,6 +51,8 @@ while True:
         print(playerobj)
 
         for player in j['players']:
+            player['characterIdkopfschuss'] = player['characterId'] + "-headshot"
+            player['kda'] = str(player['stats']['kills']) + " / " + str(player['stats']['deaths']) + " / " + str(player['stats']['assists'])
             if player['teamId'] == "Blue":
                 playerobj['playersBlue'].append(player)
             if player['teamId'] == "Red":
