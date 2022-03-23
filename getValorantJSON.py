@@ -21,7 +21,8 @@ layout = [[sg.Text('Playername:')],
 
 window = sg.Window('getValorantJSON', layout, icon=baseicon)
 
-
+def get_score(player):
+    return player['stats']['score']
 
 while True:
     event, values = window.read()
@@ -45,6 +46,21 @@ while True:
         with open('json_response.json', 'w') as outfile:
             json.dump(j, outfile)
 
+        playerobj = {"playersRed": [], "playersBlue": []}
+
+        print(playerobj)
+
+        for player in j['players']:
+            if player['teamId'] == "Blue":
+                playerobj['playersBlue'].append(player)
+            if player['teamId'] == "Red":
+                playerobj['playersRed'].append(player)
+        
+        playerobj['playersBlue'].sort(reverse=True, key=get_score);
+        playerobj['playersRed'].sort(reverse=True, key=get_score);
+
+        with open('sortedplayers.json', 'w') as outfile2:
+            json.dump(playerobj, outfile2)
 
 # Finish up by removing from the screen
 window.close()
